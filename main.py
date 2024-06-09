@@ -21,6 +21,8 @@ def main():
                 print("Operation aborted.")
                 return
 
+    # LOADING GRAPHIC .........
+
     # Video Path
     video_path = 'test/test-scan.mov'
     cap = cv2.VideoCapture(video_path)

@@ -1,5 +1,5 @@
 # Delphi
-A smart page scanner for video to text extraction
+An extractor for video files to text
 
 ## Software Components
 
@@ -25,5 +25,12 @@ A smart page scanner for video to text extraction
 - Then use Pip to install dependencies <br>
 `pip install -r requirements.txt`
 ### Running
+- Before extracting pages from a video, add your video file in `test` directory.
+- Change the name of the Video Path in `main.py`:
+```
+    # Video Path
+    video_path = 'test/test-scan.mov'
+```
+- Alternatively, set a custom Video Path for your liking
 
 
