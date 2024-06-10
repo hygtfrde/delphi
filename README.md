@@ -1,21 +1,21 @@
 # Delphi
-An extractor for video files to text
+An extractor program for video files to raw text
 
-## Software Components
+## Software Components in src
 
-### Page Extractor (Scanner)
-- Utilize motion detection to recognize a full page
-  -- Extract the still frame
+### Page Extractor
+- Utilize motion detection to recognize a full page, scanning its contents
+  - Extract the still frame
 - Increment and count prefixes and page numbers
 
 ### Text Extractor
 - Feed in the raw pages as image files and generate text pages
-  -- Utilize Tesseract OCR
+  - Utilize Tesseract OCR
 
 ### Main.py
 - Entry point to run program
 
-## Set Up
+## How to Set Up and Run
 
 ### Venv
 - Start your Venv or Conda environment before downloading <br>

@@ -5,9 +5,14 @@ import os
 class BookPageExtractor:
     def __init__(self, video_path):
         self.video_path = video_path
+
+        # store the video capture object
         self.cap = cv2.VideoCapture(video_path)
-        # Set CAP_PROP_FOURCC to 'MJPG' to ensure no audio is loaded
+        
+        # set CAP_PROP_FOURCC to 'MJPG' to ensure no audio is loaded
         self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+        
+        # retrieve the total number of frames in the video file
         self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     def are_pages_visible(self, frame):
