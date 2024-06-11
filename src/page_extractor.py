@@ -19,7 +19,7 @@ class BookPageExtractor:
         # convert to greyscale 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
-        # edge detection
+        # Edge Detection:
         # threshold1 (50): Any pixel with a gradient below this value is considered not to be an edge
         # threshold2 (150): Any pixel with a gradient above this value is considered a strong edge.
         edges = cv2.Canny(gray, 50, 150)
