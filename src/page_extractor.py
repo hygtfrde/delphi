@@ -38,6 +38,10 @@ class BookPageExtractor:
         if len(page_contours) == 2:
             return True
         return False
+    
+    # Validation step
+    def are_pages_unique():
+        pass
 
     def extract_page(self, frame, output_path, frame_number):
         file_name = os.path.join(output_path, f'page_frame_{frame_number}.jpg')
