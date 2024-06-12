@@ -16,17 +16,25 @@ class BookPageExtractor:
         self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     def are_pages_visible(self, frame):
-        # Logic to detect if both pages are visible
+        # convert to greyscale 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        # Edge Detection:
+        # threshold1 (50): Any pixel with a gradient below this value is considered not to be an edge
+        # threshold2 (150): Any pixel with a gradient above this value is considered a strong edge.
         edges = cv2.Canny(gray, 50, 150)
-        contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        
+        # detect contours (boundaries) and heirarchy
+        contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         
         page_contours = []
         for contour in contours:
             area = cv2.contourArea(contour)
+            # filter out contours that are unlikely to represent entire pages
             if 10000 < area < 50000:
                 page_contours.append(contour)
 
+        # if page contours is 2 then both full facing left and right pages are visible
         if len(page_contours) == 2:
             return True
         return False
@@ -36,7 +44,6 @@ class BookPageExtractor:
         pass
 
     def extract_page(self, frame, output_path, frame_number):
-        # Save the frame as an image file
         file_name = os.path.join(output_path, f'page_frame_{frame_number}.jpg')
         cv2.imwrite(file_name, frame)
         print(f'Frame {frame_number} saved as {file_name}')

@@ -6,7 +6,7 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Directory containing JPEG images
-folder_path = 'extracted_frames'
+folder_path = 'output_frames'
 
 # List all files in the directory
 files = os.listdir(folder_path)
