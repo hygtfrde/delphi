@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os
+from skimage.metrics import structural_similarity as ssim
 
 class BookPageExtractor:
     def __init__(self, video_path):
@@ -15,17 +16,18 @@ class BookPageExtractor:
         # retrieve the total number of frames in the video file
         self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
+        # To store the last captured frame
+        self.last_captured_frame = None
+
     def are_pages_visible(self, frame):
         # convert to greyscale 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Edge Detection:
-        # threshold1 (50): Any pixel with a gradient below this value is considered not to be an edge
-        # threshold2 (150): Any pixel with a gradient above this value is considered a strong edge.
         edges = cv2.Canny(gray, 50, 150)
         
         # detect contours (boundaries) and heirarchy
-        contours, hierarchy = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         
         page_contours = []
         for contour in contours:
@@ -39,9 +41,28 @@ class BookPageExtractor:
             return True
         return False
     
-    # Validation step
-    def are_pages_unique():
-        pass
+    def are_pages_unique(self, frame, threshold=0.9):
+        if self.last_captured_frame is None:
+            # If there's no last frame, this is the first one, so it's unique
+            self.last_captured_frame = frame
+            return True
+        
+        # Convert current frame to grayscale
+        gray_current = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        # Convert the last captured frame to grayscale
+        gray_last = cv2.cvtColor(self.last_captured_frame, cv2.COLOR_BGR2GRAY)
+        
+        # Compute Structural Similarity Index (SSIM) between the current and last frame
+        similarity, _ = ssim(gray_current, gray_last, full=True)
+        
+        # Determine if the current frame is unique
+        is_unique = similarity < threshold
+        
+        if is_unique:
+            self.last_captured_frame = frame
+        
+        return is_unique
 
     def extract_page(self, frame, output_path, frame_number):
         file_name = os.path.join(output_path, f'page_frame_{frame_number}.jpg')
@@ -54,7 +75,7 @@ class BookPageExtractor:
             ret, frame = self.cap.read()
             if not ret:
                 break
-            if self.are_pages_visible(frame):
+            if self.are_pages_visible(frame) and self.are_pages_unique(frame):
                 self.extract_page(frame, output_path, frame_number)
             frame_number += 1
 
