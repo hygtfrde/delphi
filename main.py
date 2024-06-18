@@ -26,7 +26,7 @@ def main():
     # LOADING GRAPHIC .........
 
     # Video Path
-    video_path = 'test/test-scan.mov'
+    video_path = 'videos/test-scan.mov'
 
     scanner = BookPageExtractor(video_path)
     scanner.process_video(output_frames_dir)
