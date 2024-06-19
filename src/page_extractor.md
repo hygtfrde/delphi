@@ -23,6 +23,9 @@ This program, `BookPageExtractor`, extracts specific frames from a video contain
 ### Is Noise Detected?
 - The `is_noise_detected` method takes a frame from the video
 
+### Flatten or Fix Curvy Pages
+- Some frames may require flattening to improve image quality, such as skewed pages or poorly lit pages
+
 ### Page Extraction
 
 - The `extract_page` method saves a frame as a JPEG image.

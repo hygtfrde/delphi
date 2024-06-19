@@ -49,3 +49,4 @@ or use another VENV for Python, such as the standard `venv`
   - Do Image to text extraction first 
   - Then focus on motion detection and helper algorithms for Video to Images of Pages
 
+- Image extraction?
