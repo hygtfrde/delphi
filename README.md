@@ -18,14 +18,17 @@ An extractor program for video files to raw text
 ## How to Set Up and Run
 
 ### Venv
-- Start your Venv or Conda environment before downloading <br>
+- Start your Conda environment before downloading <br>
 ```conda create --name delphi```
 ```conda activate delphi```
 and to deactive
 ```conda deactivate```
+or use another VENV for Python, such as the standard `venv`
+
 ### Pip
 - Then use Pip to install dependencies <br>
 `pip install -r requirements.txt`
+
 ### Running
 - Before extracting pages from a video, add your video file in `test` directory.
 - Change the name of the Video Path in `main.py`:
@@ -37,3 +40,13 @@ and to deactive
 - Start program with: ```python main.py```
 
 
+# TODO
+- User Selection Option before extraction:
+  - A) Use book holder and tripod, and/or visual audio cues (probably generates better results)
+  - B) Use regular video of user flipping pages (less work on user's end but more error prone)
+
+- MVP
+  - Do Image to text extraction first 
+  - Then focus on motion detection and helper algorithms for Video to Images of Pages
+
+- Image extraction?
