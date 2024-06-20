@@ -1,2 +1,4 @@
 opencv-python
 # resolved as cv2
+scikit-image
+# resolved as skimage

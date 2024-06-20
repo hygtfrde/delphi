@@ -29,11 +29,26 @@ A Python extractor program for video files to raw text
   - Mac/Linux: `source delphi/bin/activate`
   - Turn it off: `deactivate`
 
+<<<<<<< HEAD
+=======
+### Venv
+- Start your Conda environment before downloading <br>
+```conda create --name delphi```
+```conda activate delphi```
+and to deactive
+```conda deactivate```
+or use another VENV for Python, such as the standard `venv`
+
+>>>>>>> origin/main
 ### Pip
 - Then use Pip to install dependencies <br>
 `pip install -r requirements.txt`
 
+<<<<<<< HEAD
 ## Running
+=======
+### Running
+>>>>>>> origin/main
 - Before extracting pages from a video, add your video file in `test` directory.
 - Change the name of the Video Path in `main.py`:
 ```python
@@ -41,6 +56,7 @@ A Python extractor program for video files to raw text
     video_path = 'test/test-scan.mov'
 ```
 - Alternatively, set a custom Video Path for your liking
+- Start program with: ```python main.py```
 
 ### Main.py
 - Entry point to run program: `python main.py`
@@ -48,3 +64,13 @@ A Python extractor program for video files to raw text
 - Text file will be saved as ..... WIP
 
 
+# TODO
+- User Selection Option before extraction:
+  - A) Use book holder and tripod, and/or visual audio cues (probably generates better results)
+  - B) Use regular video of user flipping pages (less work on user's end but more error prone)
+
+- MVP
+  - Do Image to text extraction first 
+  - Then focus on motion detection and helper algorithms for Video to Images of Pages
+
+- Image extraction?
