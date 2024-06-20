@@ -1,10 +1,11 @@
 # Delphī
-<img src="image_assets/delphi_logo.svg" alt="Delphī" width="300" height="200">
+<img src="image_assets/delphi_basic.svg" alt="Delphī" width="300" height="200">
 
 ![Contributions Welcome](image_assets/contributors_welcome.svg)
 
 A Python extractor program for video files to raw text
 
+---
 ## Software Components in `src`
 
 ### Page Extractor
@@ -16,7 +17,8 @@ A Python extractor program for video files to raw text
 - Feed in the raw pages as image files and generate text pages
   - Utilize Tesseract OCR
 
-## Set Up and Installation
+---
+## Setting Up
 
 ### Virtual Enviornment
 - Start your Conda environment before downloading any modules with Pip <br>
@@ -29,26 +31,12 @@ A Python extractor program for video files to raw text
   - Mac/Linux: `source delphi/bin/activate`
   - Turn it off: `deactivate`
 
-<<<<<<< HEAD
-=======
-### Venv
-- Start your Conda environment before downloading <br>
-```conda create --name delphi```
-```conda activate delphi```
-and to deactive
-```conda deactivate```
-or use another VENV for Python, such as the standard `venv`
-
->>>>>>> origin/main
-### Pip
+### Installation
 - Then use Pip to install dependencies <br>
 `pip install -r requirements.txt`
 
-<<<<<<< HEAD
+---
 ## Running
-=======
-### Running
->>>>>>> origin/main
 - Before extracting pages from a video, add your video file in `test` directory.
 - Change the name of the Video Path in `main.py`:
 ```python
