@@ -1,6 +1,6 @@
 # Page Extractor
 
-This program, `BookPageExtractor`, extracts specific frames from a video containing book pages and saves them as individual images. It utilizes OpenCV (cv2) for video processing and image manipulation.
+`BookPageExtractor`, extracts specific frames from a video containing book pages and saves them as individual images. It utilizes OpenCV (cv2) for video processing and image manipulation.
 
 ## How It Works
 
@@ -21,10 +21,12 @@ This program, `BookPageExtractor`, extracts specific frames from a video contain
 - Checks if exactly 2 page contours are detected, indicating both facing left and right pages are visible.
 
 ### Is Noise Detected?
-- The `is_noise_detected` method takes a frame from the video
 
-### Flatten or Fix Curvy Pages
-- Some frames may require flattening to improve image quality, such as skewed pages or poorly lit pages
+- The `is_noise_detected` method takes a frame from the video and converts the input frame from a color image (BGR format) to a grayscale image using cv2.cvtColor. This simplifies processing by reducing the image to one intensity channel.
+- The grayscale image is processed with `self.background_subtractor.apply(gray)`, which creates a foreground mask (`fg_mask`). This mask highlights areas of the image that differ from the background model, indicating potential movement or noise.
+- Using cv2.findContours(`fg_mask`, `cv2.RETR_EXTERNAL`, `cv2.CHAIN_APPROX_SIMPLE)`, the function identifies the contours (boundaries) of objects in the foreground mask. It retrieves the outermost contours, which represent significant changes in the image.
+- The total area of all detected contours is calculated by summing the areas of individual contours using `sum(cv2.contourArea(contour)`. This gives a measure of the total detected change or noise in the image.
+- If `noise_area` exceeds `noise_threshold`, it returns True, indicating significant noise. Otherwise, it returns False, indicating no significant noise.
 
 ### Page Extraction
 
