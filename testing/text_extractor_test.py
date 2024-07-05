@@ -1,4 +1,4 @@
-from keras_test import keras_ocr_main
+from easyOCR_test import easyOCR_main
 
 import numpy as np
 from PIL import Image
@@ -28,4 +28,4 @@ from PIL import Image
 
 # MAIN
 if __name__ == "__main__":
-    keras_ocr_main()
+    easyOCR_main()
