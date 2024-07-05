@@ -7,7 +7,7 @@ def easyOCR_main():
     # Determine the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Relative path to the image file
-    image_file = os.path.join(script_dir, 'test_frame_2.jpg')
+    image_file = os.path.join(script_dir, 'test_frames/test_frame_2.jpg')
 
     if os.path.exists(image_file):
         # Load the image with OpenCV

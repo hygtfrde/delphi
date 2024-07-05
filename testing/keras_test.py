@@ -2,12 +2,18 @@ import keras_ocr
 import os
 import cv2
 
-
+print('111KERAS')
 def keras_ocr_main():
+    print('KERAS')
     # Determine the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Relative path to the image file
-    image_file = os.path.join(script_dir, 'test_frame_1.jpg')
+    image_file = os.path.join(script_dir, 'test_frames/test_frame_1.jpg')
+
+    if image_file:
+        print('FOUND it') 
+    else:
+        print('NOPE')
 
     if os.path.exists(image_file):
         # Load the image with OpenCV

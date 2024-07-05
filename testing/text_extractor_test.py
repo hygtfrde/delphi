@@ -1,4 +1,4 @@
-from keras_test import keras_ocr
+from keras_test import keras_ocr_main
 
 import numpy as np
 from PIL import Image
@@ -19,7 +19,7 @@ from PIL import Image
         - Solution: Implement preprocessing steps tailored to enhance text readability, such as resizing, applying filters for noise reduction, adjusting brightness/contrast, and binarizing the image to improve text extraction.
     Other OCRs:
         - EasyOCR
-        - Keras-OCR
+        - Keras-OCR (current issues with modules and dependencies)
         - Doc TR
 """
 
@@ -28,4 +28,4 @@ from PIL import Image
 
 # MAIN
 if __name__ == "__main__":
-    keras_ocr()
+    keras_ocr_main()
