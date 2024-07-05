@@ -51,7 +51,10 @@ A Python extractor program for video files to raw text
 - Images will be extracted into a `output_frames` folder
 - Text file will be saved as ..... WIP
 
+### Testing
+- To test text extraction from a still frame: `python testing/text_test_main.py`
 
+---
 # TODO
 - User Selection Option before extraction:
   - A) Use book holder and tripod, and/or visual audio cues (probably generates better results)
@@ -61,4 +64,8 @@ A Python extractor program for video files to raw text
   - Do Image to text extraction first 
   - Then focus on motion detection and helper algorithms for Video to Images of Pages
 
-- Image extraction?
+- Modify Main.py for correct user flows
+  - Video to frame extraction
+  - Frame to text extraction
+
+- Image extraction ...
