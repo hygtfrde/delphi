@@ -17,6 +17,8 @@ class BookPageExtractor:
         self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         print('FRAME COUNT: ', self.frame_count)
 
+        self.frame_number = 0
+        
         # To store the last captured frame
         self.last_captured_frame = None
 
@@ -90,19 +92,18 @@ class BookPageExtractor:
         
         return is_unique
 
-    def extract_page(self, frame, output_path, frame_number):
-        file_name = os.path.join(output_path, f'page_frame_{frame_number}.jpg')
+    def extract_page(self, frame, output_path):
+        file_name = os.path.join(output_path, f'page_frame_{self.frame_number}.jpg')
         cv2.imwrite(file_name, frame)
-        print(f'Frame {frame_number} saved as {file_name}')
+        print(f'Frame {self.frame_number} saved as {file_name}')
 
     def process_video(self, output_path):
-        frame_number = 0
         while self.cap.isOpened():
             ret, frame = self.cap.read()
             if not ret:
                 break
             if self.are_pages_visible(frame) and self.are_pages_unique(frame):
-                self.extract_page(frame, output_path, frame_number)
-            frame_number += 1
+                self.extract_page(frame, output_path)
+            self.frame_number += 1
 
         self.cap.release()
