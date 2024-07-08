@@ -10,3 +10,6 @@ OCR Configuration:
 Image Preprocessing:
     - Problem: Lack of adequate preprocessing steps (like noise reduction, binarization, or contrast adjustment) before OCR can lead to inaccuracies near creases or folds.
     - Solution: Implement preprocessing steps tailored to enhance text readability, such as resizing, applying filters for noise reduction, adjusting brightness/contrast, and binarizing the image to improve text extraction.
+User Options:
+    - A) Raw Video Extraction
+    - B) Hardware-assisted extraction (tripod, book holder)

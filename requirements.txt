@@ -8,3 +8,4 @@ pycairo
 setuptools
 wheel
 weasyprint
+tqdm
