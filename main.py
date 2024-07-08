@@ -2,14 +2,10 @@ import os
 import sys
 import time
 import threading
-from tqdm import tqdm
-import itertools
-from threading import Thread
 import cv2
 from src.page_extractor import BookPageExtractor
 
 
-# Global variables with synchronization
 done = False
 processed_frames = []
 lock = threading.Lock()
@@ -80,6 +76,11 @@ def main():
         spinner_thread.join()
 
 
+    # -------------------------------------------------
+    # TODO:
+    #  - Frame to Text extraction
+    # - Save as raw text files, or 1 giant text file
+    # ------------------------------------------------- 
 
 # MAIN
 if __name__ == "__main__":
