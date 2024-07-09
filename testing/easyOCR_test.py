@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import easyocr
 
+
 def flatten_image(frame):
     # Convert the image to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -77,7 +78,7 @@ def enlarge_image(image_file):
 
 def easyOCR_main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    image_file = os.path.join(script_dir, 'test_frames/test_frame_1.jpg')
+    image_file = os.path.join(script_dir, 'test_frames/test_frame_888.jpg')
 
     if os.path.exists(image_file):
         frame = cv2.imread(image_file)
