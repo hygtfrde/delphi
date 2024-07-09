@@ -1,0 +1,19 @@
+Preface
+Get in touch
+Feedback frain our readers is always welcome.
+General feedhack: If you have questions about any aspect of this book, email us at customercare@pucktpub.com and mention the book title in the subject of your message.
+Errata: Although we have taken every care to ensure the accuracy of our content, mistakes do happent If you bave found a mistake in this book, we would be grateful if you would report this to us. Please visit www.packtpub.com/support/errata and fill inthe form.
+Piracy. If you come across any illegal copies of our works in any form on the internet. we would be gratefulf you would provide us with the location address or website nume.
+Please contact us at copyright@packt.com with a link to the material.
+If you are interested in becoming an author. If there is a topic that you have expertise in and you are interested in either writing or contributing to a book, please visit authors.
+packtpub.com.
+Share Your Thoughts
+Once you've read Cybersecurity Career Mastor Man, we'd love to hear your thoughts! Scan the QR code below to go straight to the Amazon review page for this book and share your feedback.
+https://packt.link/r/1801073562
+Your review is important to us and the tech community and will help us make sure were delivering excellent quality content.
+Section 1:
+Getting Started with Cybersecurity
+In this section, you will gain a high-level understanding of the cybersecurity industry including niche areas, specialties, and growth fields, while also understanding that satisfaction and passion are key to long-term growth.
+The following chapters will be covered under this section:
+• Chapter I, New Career in Cyber... "Who Dis?"
+• Chapter 2, Which Career Field Is Best for You?
