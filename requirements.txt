@@ -3,9 +3,4 @@ opencv-python
 scikit-image
 # resolved as skimage
 pytesseract
-pygobject
-pycairo
-setuptools
-wheel
-weasyprint
-tqdm
+scipy

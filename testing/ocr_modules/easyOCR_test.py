@@ -90,23 +90,23 @@ def flatten_image(frame):
     return flattened_image
 
 
-def easyOCR_main():
+def easyOCR_main(frame_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(script_dir)
-    image_file = os.path.join(parent_dir, 'test_frames/enlarger_easier_frame.jpg')
+    image_file = os.path.join(parent_dir, f'test_frames/{frame_path}')
 
     if os.path.exists(image_file):
         frame = cv2.imread(image_file)
         if frame is not None:
             # Specify the language, 'en' for English
             reader = easyocr.Reader(['en'])
-            flattened_image = flatten_image(frame)
+            # flattened_image = flatten_image(frame)
+            # cv2.imwrite('testing/test_flattened.jpg', frame)
             
             cv2.imshow('Flattened Image', frame)
             key = cv2.waitKey(5000)
             if key != -1:
                 cv2.waitKey(0)
-            # cv2.imwrite('testing/test_flattened.jpg', frame)
             cv2.destroyAllWindows()
             
             
