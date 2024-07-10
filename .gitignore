@@ -6,3 +6,11 @@ output_frames/*
 
 # Ignore Python bytecode cache files
 src/__pycache__/
+
+# Ignore files inside of Videos folder
+/videos/*
+
+# Ignore testing frames and text
+__pycache__
+/testing/test_frames/*
+/testing/test_output_text/*

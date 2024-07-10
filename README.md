@@ -55,6 +55,17 @@ A Python extractor program for video files to raw text
 - To test text extraction from a still frame: `python testing/text_test_main.py`
 
 ### Docker
+- First, check services running and start your Docker Daemon: If using Homebrew:
+```
+brew services list
+brew services start docker
+brew services stop docker
+```
+If using MacOS Terminal:
+```
+launchctl start com.docker.dockerd
+launchctl stop com.docker.dockerd
+```
 - For Keras and DocTR OCR programs, Docker is a preferred option
 - Build a specific Docker container:
 `docker build -t keras_doctr_testing .`
