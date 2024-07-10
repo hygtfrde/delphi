@@ -10,12 +10,19 @@ A Python extractor program for video files to raw text
 
 ### Page Extractor
 - Utilize motion detection to recognize a full page, scanning its contents
-  - Extract the still frame
+  -- Extract the still frame
 - Increment and count prefixes and page numbers
 
 ### Text Extractor
 - Feed in the raw pages as image files and generate text pages
-  - Utilize Tesseract OCR
+  -- Utilize Tesseract OCR
+
+### Page Flattener
+- Detect edges and contours for accurate page detection
+
+### Quality Rating
+- Input a frame and provide a quality score
+  -- Essential for ensuring high quality text extraction
 
 ---
 ## Setting Up
