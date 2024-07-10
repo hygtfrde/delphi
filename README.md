@@ -6,7 +6,7 @@
 A Python extractor program for video files to raw text
 
 ---
-## Software Components in `src`
+## Core Software Components in `src`
 
 ### Page Extractor
 - Utilize motion detection to recognize a full page, scanning its contents
@@ -37,11 +37,11 @@ A Python extractor program for video files to raw text
 
 ---
 ## Running
-- Before extracting pages from a video, add your video file in `test` directory.
-- Change the name of the Video Path in `main.py`:
+- Before extracting pages from a video, add your video file in `videos` directory.
+- Match the name of the Video Path in `main.py`:
 ```python
     # Video Path
-    video_path = 'test/test-scan.mov'
+    video_path = 'videos/test-scan.mov'
 ```
 - Alternatively, set a custom Video Path for your liking
 - Start program with: ```python main.py```
@@ -52,7 +52,7 @@ A Python extractor program for video files to raw text
 - Text file will be saved as ..... WIP
 
 ### Testing
-- To test text extraction from a still frame: `python testing/text_test_main.py`
+- To test text extraction from a still frame: `python testing/test_main.py`
 
 ### Docker
 - First, check services running and start your Docker Daemon: If using Homebrew:
