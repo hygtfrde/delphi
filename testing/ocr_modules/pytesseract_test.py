@@ -4,7 +4,8 @@ import pytesseract
 
 def pytesseract_main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    image_file = os.path.join(script_dir, 'test_frames/test_frame_1.jpg')
+    parent_dir = os.path.dirname(script_dir)
+    image_file = os.path.join(parent_dir, 'test_frames/enlarger_easier_frame.jpg')
 
     if os.path.exists(image_file):
         # 1) Load the image
@@ -29,7 +30,7 @@ def pytesseract_main():
             
 
             # Save extracted text to a file
-            text_output_file = os.path.join(f"{script_dir}/test_output_text", 'text_output_1_pytesseract.txt')
+            text_output_file = os.path.join(f"{parent_dir}/test_output_text", 'text_output_1_pytesseract.txt')
             with open(text_output_file, 'w') as file:
                 file.write(text)
                 
