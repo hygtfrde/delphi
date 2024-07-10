@@ -9,8 +9,14 @@ src/__pycache__/
 
 # Ignore files inside of Videos folder
 /videos/*
+!/video/readme_videos.md
 
 # Ignore testing frames and text
 __pycache__
+
 /testing/test_frames/*
+!/testing/test_frames/test_frames_readme.md
+
 /testing/test_output_text/*
+!/testing/test_output_text/test_output_text_readme.md
+
