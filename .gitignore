@@ -1,8 +1,9 @@
 # Ignored files and directories related to output frames
 output_frames/*
 
-# Ignore macOS .DS_Store files
+# Ignore macOS .DS_Store files, python bytecode
 .DS_Store
+__pycache__
 
 # Ignore Python bytecode cache files
 src/__pycache__/
@@ -12,7 +13,7 @@ src/__pycache__/
 !/videos/readme_videos.md
 
 # Ignore testing frames and text
-__pycache__
+testing/__pycache__
 
 /testing/test_frames/*
 !/testing/test_frames/test_frames_readme.md
