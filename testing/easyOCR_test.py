@@ -4,13 +4,30 @@ import numpy as np
 import easyocr
 
 
+def enlarge_image(image_file):
+    # Enlarge the image by a factor (e.g., 2 times)
+    scale_factor = 2
+    width = int(image_file.shape[1] * scale_factor)
+    height = int(image_file.shape[0] * scale_factor)
+    dimensions = (width, height)
+    enlarged_image = cv2.resize(image_file, dimensions, interpolation=cv2.INTER_LINEAR)
+    return enlarged_image
+
+
+
 def flatten_image(frame):
     # Convert the image to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     # Apply GaussianBlur to reduce noise and improve edge detection
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    
     # Edge detection using Canny
-    edged = cv2.Canny(blurred, 50, 150)
+    # edged = cv2.Canny(blurred, 50, 150)
+    
+    thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
+    edged = cv2.Canny(thresh, 50, 150)
+    
+    
     # Find contours in the edged image
     contours, _ = cv2.findContours(edged, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     # Sort contours by area and keep the largest ones
@@ -61,18 +78,6 @@ def flatten_image(frame):
     cv2.destroyAllWindows()
     
     return flattened_image
-
-
-
-
-def enlarge_image(image_file):
-    # Enlarge the image by a factor (e.g., 2 times)
-    scale_factor = 2
-    width = int(image_file.shape[1] * scale_factor)
-    height = int(image_file.shape[0] * scale_factor)
-    dimensions = (width, height)
-    enlarged_image = cv2.resize(image_file, dimensions, interpolation=cv2.INTER_LINEAR)
-    return enlarged_image
 
 
 
