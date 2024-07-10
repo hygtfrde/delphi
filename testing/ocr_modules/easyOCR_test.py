@@ -92,7 +92,8 @@ def flatten_image(frame):
 
 def easyOCR_main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    image_file = os.path.join(script_dir, 'test_frames/test_frame_ds_1.png')
+    parent_dir = os.path.dirname(script_dir)
+    image_file = os.path.join(parent_dir, 'test_frames/enlarger_easier_frame.jpg')
 
     if os.path.exists(image_file):
         frame = cv2.imread(image_file)
@@ -116,7 +117,7 @@ def easyOCR_main():
 
             # Extract the base name of the image file without extension
             base_name = os.path.splitext(os.path.basename(image_file))[0]
-            text_output_file = os.path.join(script_dir, 'test_output_text', f'{base_name}_output.txt')
+            text_output_file = os.path.join(parent_dir, 'test_output_text', f'{base_name}_output.txt')
             with open(text_output_file, 'w') as file:
                 file.write(text)
                 
