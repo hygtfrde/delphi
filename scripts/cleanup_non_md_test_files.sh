@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Define the directories
-DIR1="testing/test_output_text"
-DIR2="testing/test_frames"
+SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR1="$SCRIPT_DIR/../testing/test_output_text"
+DIR2="$SCRIPT_DIR/../testing/test_frames"
 
-# Function to delete files except those ending with .md
+
 cleanup_directory() {
   local dir=$1
   if [ -d "$dir" ]; then
@@ -15,6 +15,6 @@ cleanup_directory() {
   fi
 }
 
-# Cleanup both directories
+
 cleanup_directory "$DIR1"
 cleanup_directory "$DIR2"

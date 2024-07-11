@@ -4,4 +4,5 @@
 docker build -t keras_doctr_testing .
 
 # Run the container
-docker run --rm keras_doctr_testing
+docker run -it --rm keras_doctr_testing
+
