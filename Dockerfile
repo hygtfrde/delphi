@@ -9,16 +9,23 @@ WORKDIR /app
 
 # Update package lists and install necessary dependencies
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip
+    apt-get install -y python3 python3-pip python3-venv python3.12-venv
 
-# Copy only the necessary files into the Docker image
-COPY . .
+# Copy the entire parent directory into the Docker image
+COPY . /app
 
-# Install Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+# Show contents of the directory and requirements.txt for debugging
+RUN ls -la /app
+RUN cat /app/requirements.txt
+
+# Create a virtual environment
+RUN python3 -m venv venv
+
+# Activate the virtual environment and install Python dependencies
+RUN . venv/bin/activate && pip install --no-cache-dir -r requirements.txt
 
 # Make entrypoint script executable
-COPY ./docker_entrypoint.sh /app/docker_entrypoint.sh
+COPY ./docker/docker_entrypoint.sh /app/docker_entrypoint.sh
 RUN chmod +x /app/docker_entrypoint.sh
 
 # Entrypoint script to prompt the user for test file selection

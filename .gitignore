@@ -14,6 +14,7 @@ src/__pycache__/
 
 # Ignore testing frames and text
 testing/__pycache__
+testing/ocr_modules/__pycache__
 
 /testing/test_frames/*
 !/testing/test_frames/test_frames_readme.md
