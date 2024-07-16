@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     libglvnd-dev \
     libhdf5-dev \
     pkg-config \
+    libgthread-2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the entire parent directory into the Docker image
@@ -30,7 +31,9 @@ RUN cat /app/requirements.txt
 RUN python3 -m venv venv
 
 # Activate the virtual environment and install Python dependencies
-RUN . venv/bin/activate && pip install --no-cache-dir -r requirements.txt
+RUN . venv/bin/activate && pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install opencv-python
 
 # Make entrypoint script executable
 COPY ./docker/docker_entrypoint.sh /app/docker_entrypoint.sh
