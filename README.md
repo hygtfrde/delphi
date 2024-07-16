@@ -74,13 +74,14 @@ launchctl start com.docker.dockerd
 launchctl stop com.docker.dockerd
 ```
 - For Keras and DocTR OCR programs, Docker is a preferred option
-- Inside of the `/docker` directory, build a specific Docker container:
-`docker build -t keras_doctr_testing .`
-- Run the container:
-`docker run -it --rm keras_doctr_testing`
-- Replace `keras_doctr_testing` with another testing script if needed.
+- Build a specific Docker image:
+`docker build -t ocr_testing .`
+- Run the image and create a container:
+`docker run -it --rm ocr_testing`
+- Replace `ocr_testing` with another name for the tests if needed.
 - Or just execute the Docker script and follow the prompts to build and run:
 `sh run_docker.sh`
+- Inside of the `/docker` directory, `docker_entrypoint.sh` defines which tests to run, modify the test scripts if needed.
 
 ---
 # TODO

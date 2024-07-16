@@ -7,9 +7,17 @@ FROM ubuntu:latest
 # Set the working directory inside the container
 WORKDIR /app
 
-# Update package lists and install necessary dependencies
+# Update package lists and install Python
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-venv python3.12-venv
+    apt-get install -y \
+    python3 python3-pip python3-venv python3.12-venv
+
+# Install Keras and DoctTR required system packages
+RUN apt-get update && apt-get install -y \
+    libglvnd-dev \
+    libhdf5-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy the entire parent directory into the Docker image
 COPY . /app
