@@ -1,35 +1,46 @@
 import os
 import cv2
 import pytesseract
+import numpy as np
+from PIL import Image
+
 
 # Path to Tesseract executable (change this to your Tesseract installation path)
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-# Directory containing JPEG images
-folder_path = 'output_frames'
+class TextExtractor:
+    def __init__(self, folder_path, output_folder='output_text'):
+        self.folder_path = folder_path
+        self.output_folder = output_folder
+        self.files = os.listdir(folder_path)
+        
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
 
-# List all files in the directory
-files = os.listdir(folder_path)
+    def extract_text(self, frame_path):
+        if os.path.exists(frame_path):
+            # 1) Load the image
+            # frame = cv2.imread(frame_path)
+            
+            # Load the image using PIL
+            image_pil = Image.open(frame_path)
+            frame = np.array(image_pil)
+            if frame.dtype != np.uint8:
+                frame = frame.astype(np.uint8)
 
-# Iterate over each file in the directory
-for file_name in files:
-    # Check if the file is a JPEG image
-    if file_name.endswith('.jpg') or file_name.endswith('.jpeg'):
-        # Construct the full path to the image
-        image_path = os.path.join(folder_path, file_name)
+            # Check if the image was successfully loaded
+            if frame is not None:
+                # Apply OCR to the image
+                text = pytesseract.image_to_string(frame)
 
-        # Load the image
-        frame = cv2.imread(image_path)
-
-        # Pre-process frame (e.g., resize, denoise, binarize)
-        # Here, you can add any pre-processing steps you need before OCR
-        # For example, resizing the image to a specific size
-        # frame = cv2.resize(frame, (new_width, new_height))
-
-        # Apply OCR to the pre-processed frame
-        text = pytesseract.image_to_string(frame)
-
-        # Print extracted text
-        print(f"Text extracted from {file_name}:")
-        print(text)
-        print()  # Add a blank line for readability
+                # Save the extracted text to a file
+                text_output_file = os.path.join(self.output_folder, f'{os.path.basename(frame_path)}_text_output.txt')
+                
+                with open(text_output_file, 'w') as file:
+                    file.write(text)
+                
+                print(f"Extracted text saved to: {text_output_file}")
+            else:
+                print(f"Failed to load image frame: {frame_path}")
+        else:
+            print(f"File not found: {frame_path}")

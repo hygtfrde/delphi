@@ -77,7 +77,7 @@ launchctl stop com.docker.dockerd
 - Build a specific Docker image:
 `docker build -t ocr_testing .`
 - Run the image and create a container:
-`docker run -it --rm ocr_testing`
+`docker run -it ocr_testing`
 - Replace `ocr_testing` with another name for the tests if needed.
 - Or just execute the Docker script and follow the prompts to build and run:
 `sh run_docker.sh`

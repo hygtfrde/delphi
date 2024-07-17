@@ -4,6 +4,7 @@ import time
 import threading
 import cv2
 from src.page_extractor import BookPageExtractor
+# from src.text_extractor import 
 
 
 done = False
@@ -58,7 +59,11 @@ def main():
             else:
                 print("Operation aborted.")
                 return
-            
+
+    output_text_dir = 'output_text'
+    if not os.path.exists(output_text_dir):
+        os.makedirs(output_text_dir)
+          
     global done
     done = False
 
@@ -76,11 +81,7 @@ def main():
         spinner_thread.join()
 
 
-    # -------------------------------------------------
-    # TODO:
-    #  - Frame to Text extraction
-    # - Save as raw text files, or 1 giant text file
-    # ------------------------------------------------- 
+
 
 # MAIN
 if __name__ == "__main__":
