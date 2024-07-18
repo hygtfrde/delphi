@@ -101,7 +101,7 @@ class BookPageExtractor:
     def extract_page(self, frame, output_path):
         file_name = os.path.join(output_path, f'page_frame_{self.frame_number}.jpg')
         cv2.imwrite(file_name, frame)
-        print(f'Frame {self.frame_number} saved as {file_name}')
+        # print(f'Frame {self.frame_number} saved as {file_name}')
 
 
     def process_video(self, output_path):
@@ -109,8 +109,7 @@ class BookPageExtractor:
             ret, frame = self.cap.read()
             if not ret:
                 break
-            if self.are_pages_visible(frame) and self.are_pages_unique(frame):
-                self.extract_page(frame, output_path)
+            self.extract_page(frame, output_path)
             self.frame_number += 1
 
         self.cap.release()
