@@ -5,25 +5,31 @@ from skimage.metrics import structural_similarity as ssim
 
 class BookPageExtractor:
     def __init__(self, video_path):
-        self.video_path = video_path
+        try:
+            self.video_path = video_path
 
-        # store the video capture object
-        self.cap = cv2.VideoCapture(video_path)
-        
-        # set CAP_PROP_FOURCC to 'MJPG' to ensure no audio is loaded
-        self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-        
-        # retrieve the total number of frames in the video file
-        self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        print('FRAME COUNT: ', self.frame_count)
+            # store the video capture object
+            self.cap = cv2.VideoCapture(video_path)
+            
+            if not self.cap.isOpened():
+                raise ValueError(f"Error: Could not open video {video_path}")
+            
+            # set CAP_PROP_FOURCC to 'MJPG' to ensure no audio is loaded
+            self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+            
+            # retrieve the total number of frames in the video file
+            self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            print('FRAME COUNT: ', self.frame_count)
 
-        self.frame_number = 0
-        
-        # To store the last captured frame
-        self.last_captured_frame = None
+            self.frame_number = 0
+            
+            # To store the last captured frame
+            self.last_captured_frame = None
 
-        # Background subtractor for noise detection
-        self.background_subtractor = cv2.createBackgroundSubtractorMOG2()
+            # Background subtractor for noise detection
+            self.background_subtractor = cv2.createBackgroundSubtractorMOG2()
+        except Exception as e:
+            print(f'Error: {e}, \ninitializing BookPageExtractor and video_path: {video_path}')
 
     def are_pages_visible(self, frame):
         # convert to greyscale 
@@ -97,6 +103,7 @@ class BookPageExtractor:
         cv2.imwrite(file_name, frame)
         print(f'Frame {self.frame_number} saved as {file_name}')
 
+
     def process_video(self, output_path):
         while self.cap.isOpened():
             ret, frame = self.cap.read()
@@ -107,3 +114,4 @@ class BookPageExtractor:
             self.frame_number += 1
 
         self.cap.release()
+

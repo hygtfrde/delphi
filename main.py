@@ -45,13 +45,17 @@ def spinner_task(style='lines'):
 
 
 
-def main():
-    video_path = 'videos/test-scan.mov'
-    scanner = BookPageExtractor(video_path)
+def main(video_path_input):
+    scanner = BookPageExtractor(video_path_input)
+    extractor = TextExtractor()
+    
     output_frames_dir = 'output_frames'
-
     if not os.path.exists(output_frames_dir):
         os.makedirs(output_frames_dir)
+    output_text_dir = 'output_text'
+    if not os.path.exists(output_text_dir):
+        os.makedirs(output_text_dir)
+        
     else:
         existing_files = os.listdir(output_frames_dir)
         if existing_files:
@@ -67,32 +71,29 @@ def main():
             else:
                 print("Operation aborted.")
                 return
+        else:
+            print('Continuing...')
+        
 
-    output_text_dir = 'output_text'
-    if not os.path.exists(output_text_dir):
-        os.makedirs(output_text_dir)
-          
+    # ----------- Perform actual video processing and frame simulation -----------
     global done
     done = False
     spinner_thread = threading.Thread(target=spinner_task)
     spinner_thread.start()
 
-    # ----------- Perform actual video processing and frame simulation -----------
     try:
         scanner.process_video(output_frames_dir)
     except Exception as e:
         print(f'Error scanning video file: {e}')
     finally:
-        # Indicate that the processing is done
         done = True
-        # Ensure the spinner thread finishes
         spinner_thread.join()
+
 
     # ----------- Perform actual text extraction from image frames -----------
     done = False
     spinner_thread_dots = threading.Thread(target=spinner_task, args=('dots',))
     spinner_thread_dots.start()
-    extractor = TextExtractor()
     
     try:
         scanned_frames = os.listdir(output_frames_dir)
@@ -108,4 +109,4 @@ def main():
 
 # MAIN
 if __name__ == "__main__":
-    main()
+    main('videos/shorter.mp4')
