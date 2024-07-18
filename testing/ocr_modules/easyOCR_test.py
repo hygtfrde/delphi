@@ -100,10 +100,11 @@ def easyOCR_main(frame_path):
         if frame is not None:
             # Specify the language, 'en' for English
             reader = easyocr.Reader(['en'])
+            # Pre-process the image for better extraction accuracy
             # flattened_image = flatten_image(frame)
             # cv2.imwrite('testing/test_flattened.jpg', frame)
             
-            cv2.imshow('Flattened Image', frame)
+            cv2.imshow('Frame', frame)
             key = cv2.waitKey(5000)
             if key != -1:
                 cv2.waitKey(0)
@@ -117,7 +118,7 @@ def easyOCR_main(frame_path):
 
             # Extract the base name of the image file without extension
             base_name = os.path.splitext(os.path.basename(image_file))[0]
-            text_output_file = os.path.join(parent_dir, 'test_output_text', f'{base_name}_output.txt')
+            text_output_file = os.path.join(parent_dir, 'test_output_text', f'easyOCR_{base_name}_output.txt')
             with open(text_output_file, 'w') as file:
                 file.write(text)
                 

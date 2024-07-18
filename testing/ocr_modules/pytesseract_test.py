@@ -2,10 +2,10 @@ import os
 import cv2
 import pytesseract
 
-def pytesseract_main():
+def pytesseract_main(frame_path):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(script_dir)
-    image_file = os.path.join(parent_dir, 'test_frames/enlarger_easier_frame.jpg')
+    image_file = os.path.join(parent_dir, f'test_frames/{frame_path}')
 
     if os.path.exists(image_file):
         # 1) Load the image
@@ -27,13 +27,12 @@ def pytesseract_main():
             # gray = cv2.GaussianBlur(gray, (3, 3), 0)
             # _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
             # text = pytesseract.image_to_string(thresh)
-            
 
-            # Save extracted text to a file
-            text_output_file = os.path.join(f"{parent_dir}/test_output_text", 'text_output_1_pytesseract.txt')
+            # Extract the base name of the image file without extension
+            base_name = os.path.splitext(os.path.basename(image_file))[0]
+            text_output_file = os.path.join(parent_dir, 'test_output_text', f'pytesseract_{base_name}_output.txt')
             with open(text_output_file, 'w') as file:
                 file.write(text)
-                
             # Print extracted text
             # print(f"Text extracted from {image_file}:")
             # print(text)

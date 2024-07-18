@@ -52,5 +52,13 @@ class QualityRating:
         print(f"Contrast: {self.contrast()}")
         print(f"Noise: {self.noise()}")
         print(f"Quality Score: {self.quality_score()}")
+        
+    def curviness():
+        return
+    
+    def rotation():
+        return 
+    
+    
     
 
