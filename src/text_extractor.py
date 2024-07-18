@@ -15,10 +15,16 @@ class TextExtractor:
 
     def extract_text(self, frame_path):
         if os.path.exists(frame_path):
-            # 1) Load the image
+            valid_image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.gif', '.webp']
+            _, ext = os.path.splitext(frame_path)
+            if ext.lower() not in valid_image_extensions:
+                print(f"File is not a valid image: {frame_path}")
+                return
+        
+            # 1) Basic Loading of the image
             # frame = cv2.imread(frame_path)
             
-            # Load the image using PIL
+            # 2) Load the image using PIL
             image_pil = Image.open(frame_path)
             frame = np.array(image_pil)
             if frame.dtype != np.uint8:

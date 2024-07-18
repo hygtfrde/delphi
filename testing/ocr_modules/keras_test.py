@@ -2,7 +2,7 @@ import keras_ocr
 import os
 import cv2
 
-print('111KERAS')
+
 def keras_ocr_main():
     print('KERAS')
     script_dir = os.path.dirname(os.path.abspath(__file__))

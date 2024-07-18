@@ -108,7 +108,7 @@ def main(video_path_input):
                 print("Operation aborted.")
                 return
         else:
-            print('Continuing...')
+            print('No existing files found in output text, continuing...')
 
     done = False
     spinner_thread_dots = threading.Thread(target=spinner_task, args=('dots',))
