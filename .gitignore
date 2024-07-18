@@ -1,5 +1,6 @@
-# Ignored files and directories related to output frames
+# Ignored files and directories related to output frames and output text
 output_frames/*
+output_text/*
 
 # Ignore macOS .DS_Store files, python bytecode
 .DS_Store

@@ -9,13 +9,9 @@ from PIL import Image
 # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 class TextExtractor:
-    def __init__(self, folder_path, output_folder='output_text'):
-        self.folder_path = folder_path
+    def __init__(self, output_folder='output_text'):
         self.output_folder = output_folder
-        self.files = os.listdir(folder_path)
-        
-        if not os.path.exists(output_folder):
-            os.makedirs(output_folder)
+
 
     def extract_text(self, frame_path):
         if os.path.exists(frame_path):
