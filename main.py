@@ -10,6 +10,8 @@ done = False
 processed_frames = []
 lock = threading.Lock()
 
+# ----------------------------------------
+# Status Helper
 def spinner_task(style='lines'):
     idx = 0
     spinner_symbols = ['-', '\\', '|', '/']
@@ -41,7 +43,7 @@ def spinner_task(style='lines'):
         if processed_frames and processed_frames[-1]:
             sys.stdout.write(f'\r✔ {processed_frames[-1]}\n')
             sys.stdout.flush()
-       
+# ----------------------------------------
 
 
 

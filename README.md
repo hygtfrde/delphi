@@ -3,7 +3,7 @@
 
 ![Contributions Welcome](image_assets/contributors_welcome.svg)
 
-A Python extractor program for video files to raw text
+An open sourced extractor for video files to raw text
 
 ---
 ## Core Software Components in `src`
@@ -15,14 +15,16 @@ A Python extractor program for video files to raw text
 
 ### Text Extractor
 - Feed in the raw pages as image files and generate text pages
-  -- Utilize Tesseract OCR
+  -- Utilizes OCR
 
-### Page Flattener
+### Normalizer
 - Detect edges and contours for accurate page detection
+- Enlarge or shrink frame as necessary
+- Flatten the image and remove curves
 
 ### Quality Rating
 - Input a frame and provide a quality score
-  -- Essential for ensuring high quality text extraction
+  -- Ensuring high quality text extraction and confidence levels
 
 ---
 ## Setting Up
@@ -59,6 +61,7 @@ A Python extractor program for video files to raw text
 - Text file will be saved as ..... WIP
 
 ### Testing
+#### Text Extraction
 - To test text extraction from a still frame: `python testing/test_main.py`
 
 ### Docker
@@ -82,19 +85,3 @@ launchctl stop com.docker.dockerd
 - Or just execute the Docker script and follow the prompts to build and run:
 `sh run_docker.sh`
 - Inside of the `/docker` directory, `docker_entrypoint.sh` defines which tests to run, modify the test scripts if needed.
-
----
-# TODO
-- User Selection Option before extraction:
-  - A) Use book holder and tripod, and/or visual audio cues (probably generates better results)
-  - B) Use regular video of user flipping pages (less work on user's end but more error prone)
-
-- MVP
-  - Do Image to text extraction first 
-  - Then focus on motion detection and helper algorithms for Video to Images of Pages
-
-- Modify Main.py for correct user flows
-  - Video to frame extraction
-  - Frame to text extraction
-
-- Image extraction ...
