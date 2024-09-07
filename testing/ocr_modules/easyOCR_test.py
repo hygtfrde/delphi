@@ -100,9 +100,6 @@ def easyOCR_main(frame_path):
         if frame is not None:
             # Specify the language, 'en' for English
             reader = easyocr.Reader(['en'])
-            # Pre-process the image for better extraction accuracy
-            # flattened_image = flatten_image(frame)
-            # cv2.imwrite('testing/test_flattened.jpg', frame)
             
             cv2.imshow('Frame', frame)
             key = cv2.waitKey(5000)
