@@ -107,6 +107,10 @@ def easyOCR_main(frame_path):
                 cv2.waitKey(0)
             cv2.destroyAllWindows()
             
+            # ##########################
+            # Quality Check
+            # ##########################
+            
             
             # Apply OCR
             results = reader.readtext(frame)
