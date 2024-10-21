@@ -2,7 +2,14 @@ import os
 import cv2
 import numpy as np
 import easyocr
+import os
 
+"""
+This program:
+    - processes an image
+    - improves its quality
+    - extracts text using optical character recognition (OCR)
+"""
 
 def enlarge_image(image_file):
     # Enlarge the image by a factor (e.g., 2 times)
@@ -12,7 +19,6 @@ def enlarge_image(image_file):
     dimensions = (width, height)
     enlarged_image = cv2.resize(image_file, dimensions, interpolation=cv2.INTER_LINEAR)
     return enlarged_image
-
 
 
 def flatten_image(frame):
@@ -81,13 +87,37 @@ def flatten_image(frame):
     # Apply perspective transformation
     flattened_image = cv2.warpPerspective(frame, matrix, (maxWidth, maxHeight))
     
-    cv2.imshow('Flattened Image', flattened_image)
+    return flattened_image
+
+
+def enhance_image(image):
+    """ Apply quality improvement techniques: denoising, sharpening, and contrast adjustment """
+    
+    # Denoise using Gaussian blur
+    denoised = cv2.GaussianBlur(image, (5, 5), 0)
+    
+    # Sharpen the image using a kernel
+    kernel = np.array([[0, -1, 0], [-1, 5,-1], [0, -1, 0]])
+    sharpened = cv2.filter2D(denoised, -1, kernel)
+    
+    # Convert to grayscale and apply histogram equalization to improve contrast
+    gray = cv2.cvtColor(sharpened, cv2.COLOR_BGR2GRAY)
+    contrast_adjusted = cv2.equalizeHist(gray)
+    
+    return contrast_adjusted
+
+
+def display_images(original, improved):
+    """ Display original and improved images side by side """
+    
+    # Convert gray to BGR for stacking
+    combined = np.hstack((original, cv2.cvtColor(improved, cv2.COLOR_GRAY2BGR)))
+    cv2.imshow('Original vs Improved', combined)
+    
     key = cv2.waitKey(5000)
     if key != -1:
         cv2.waitKey(0)
     cv2.destroyAllWindows()
-    
-    return flattened_image
 
 
 def easyOCR_main(frame_path):
@@ -95,37 +125,52 @@ def easyOCR_main(frame_path):
     parent_dir = os.path.dirname(script_dir)
     image_file = os.path.join(parent_dir, f'test_frames/{frame_path}')
 
+    output_dir = os.path.join(parent_dir, 'easyOCR_output')
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"Directory 'easyOCR_output' created at: {output_dir}")
+    else:
+        print(f"Directory 'easyOCR_output' already exists at: {output_dir}")
+
     if os.path.exists(image_file):
+        # Extract the base name of the image file without extension
+        base_name = os.path.splitext(os.path.basename(image_file))[0]
         frame = cv2.imread(image_file)
         if frame is not None:
             # Specify the language, 'en' for English
             reader = easyocr.Reader(['en'])
             
-            cv2.imshow('Frame', frame)
-            key = cv2.waitKey(5000)
-            if key != -1:
-                cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            # Apply quality improvements
+            improved_frame = enhance_image(frame) 
             
-            # ##########################
-            # Quality Check
-            # ##########################
+            # Display both images for comparison
+            display_images(frame, improved_frame)
             
-            
-            # Apply OCR
+            # Apply OCR on the improved image
             results = reader.readtext(frame)
+            improved_results = reader.readtext(improved_frame)
+
+
             # Combine the extracted text into a single string
             text = '\n'.join([result[1] for result in results])
+            improved_text = '\n'.join([result[1] for result in improved_results])
 
-            # Extract the base name of the image file without extension
-            base_name = os.path.splitext(os.path.basename(image_file))[0]
-            text_output_file = os.path.join(parent_dir, 'test_output_text', f'easyOCR_{base_name}_output.txt')
+            # Save the extracted text into the same directory
+            text_output_file = os.path.join(output_dir, f'{base_name}_text_output.txt')
+            improved_text_output_file = os.path.join(output_dir, f'{base_name}_improved_text_output.txt')
             with open(text_output_file, 'w') as file:
                 file.write(text)
-                
+            with open(improved_text_output_file, 'w') as file:
+                file.write(improved_text)
+
             print(f"Extracted text saved to: {text_output_file}")
+            print(f"Extracted text: {text}")
         else:
             print(f"CV2 failed to load image frame: {image_file}")
     else:
         print(f"File not found: {image_file}")
 
+
+# Test the program with an image
+if __name__ == "__main__":
+    easyOCR_main('your_image.jpg')
