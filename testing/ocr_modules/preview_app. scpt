@@ -1,65 +1,63 @@
--- Ask the user to select the folder containing image files
-set imageFolder to choose folder with prompt "Select the folder containing image files:"
-set outputFolder to (imageFolder as text) & "output_text"
+-- Helper function to create output directories
+on createOutputDirectory(parentFolder)
+	tell application "Finder"
+		if not (exists folder (parentFolder & "output_text")) then
+			make new folder at parentFolder with properties {name:"output_text"}
+		end if
+		if not (exists folder (parentFolder & "output_pdfs")) then
+			make new folder at parentFolder with properties {name:"output_pdfs"}
+		end if
+		return {textFolder:(parentFolder & "output_text:"), pdfFolder:(parentFolder & "output_pdfs:")}
+	end tell
+end createOutputDirectory
 
--- Create the output folder if it doesn't exist
-tell application "Finder"
-    if not (exists folder outputFolder) then
-        make new folder at imageFolder with properties {name:"output_text"}
-    end if
-end tell
+-- Helper function to get base filename without extension
+on getBaseName(fileName)
+	set tid to AppleScript's text item delimiters
+	set AppleScript's text item delimiters to "."
+	set baseName to text items 1 thru -2 of fileName as string
+	set AppleScript's text item delimiters to tid
+	return baseName
+end getBaseName
 
--- Get the list of image files from the folder (we expect common formats like JPG, PNG)
-tell application "Finder"
-    set imageFiles to every file of folder imageFolder whose name extension is "jpg" or name extension is "png"
-end tell
-
--- Process each image file
-repeat with imgFile in imageFiles
-    set imagePath to (POSIX path of (imgFile as alias))
-    set imageName to name of imgFile
-    set baseName to my remove_extension(imageName)
-    set outputFileName to baseName & "_text.txt"
-    set outputFilePath to (POSIX path of (outputFolder as alias)) & outputFileName
-    
-    -- Open the image in Preview
-    tell application "Preview"
-        open imgFile
-        delay 1 -- Small delay to ensure the file opens
-        
-        -- Select all and copy (assuming the OCR can handle this)
-        tell application "System Events"
-            keystroke "a" using {command down}
-            delay 0.5
-            keystroke "c" using {command down}
-            delay 0.5
-        end tell
-    end tell
-    
-    -- Get the copied text from the clipboard and save it to a .txt file
-    set copiedText to the clipboard
-    my write_to_file(copiedText, outputFilePath)
-    
-    -- Close the image in Preview
-    tell application "Preview" to close window 1
-end repeat
-
--- Helper function to remove the file extension
-on remove_extension(filename)
-    set AppleScript's text item delimiters to "."
-    set baseName to text items 1 thru -2 of filename as string
-    set AppleScript's text item delimiters to ""
-    return baseName
-end remove_extension
-
--- Helper function to write text to a file
-on write_to_file(this_text, target_file)
-    try
-        set file_descriptor to open for access POSIX file target_file with write permission
-        write this_text to file_descriptor as Çclass utf8È
-        close access file_descriptor
-    on error errMsg
-        close access file_descriptor
-        display dialog "Error writing to file: " & errMsg
-    end try
-end write_to_file
+-- Main script
+try
+	-- 1. Prompt user for folder
+	set imageFolder to choose folder with prompt "Select folder containing images:"
+	set outputFolders to my createOutputDirectory(imageFolder as text)
+	set pdfFolder to pdfFolder of outputFolders -- Correctly reference the pdfFolder
+	
+	-- Get list of image files
+	tell application "Finder"
+		set imageFiles to files of folder imageFolder whose name extension is in {"jpg", "jpeg", "png", "tiff", "gif"}
+	end tell
+	
+	-- 2. Process each file (PDF conversion)
+	repeat with imageFile in imageFiles
+		try
+			set fileName to name of imageFile
+			set baseName to my getBaseName(fileName)
+			set pdfPath to (pdfFolder & baseName & ".pdf")
+			
+			-- Open the image file in Preview
+			tell application "Preview"
+				activate
+				open imageFile
+				delay 1 -- Give time to open
+				
+				-- Export the document as PDF with the correct AppleScript PDF type
+				save front document in file pdfPath as Çclass PDF È
+				close front document saving no
+			end tell
+			
+		on error errMsg
+			display dialog "Error processing file " & fileName & ": " & errMsg buttons {"OK"} default button "OK" with icon stop
+		end try
+	end repeat
+	
+	-- Success message
+	display dialog "PDF conversion complete!" buttons {"OK"} default button "OK"
+	
+on error errMsg
+	display dialog "Error: " & errMsg buttons {"OK"} default button "OK" with icon stop
+end try
