@@ -90,4 +90,4 @@ def main(video_path_input):
 
 # MAIN
 if __name__ == "__main__":
-    main('videos/shorter.mp4')
+    main('input_videos/shorter.mp4')

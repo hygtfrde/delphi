@@ -1,7 +1,7 @@
 # Delphī
-<img src="image_assets/delphi_basic.svg" alt="Delphī" width="300" height="200">
+<img src="_imgs/delphi_basic.svg" alt="Delphī" width="300" height="200">
 
-![Contributions Welcome](image_assets/contributors_welcome.svg)
+![Contributions Welcome](_imgs/contributors_welcome.svg)
 
 An open sourced extractor for video files to raw text
 
