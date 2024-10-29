@@ -46,7 +46,7 @@ try
 				delay 1 -- Give time to open
 				
 				-- Export the document as PDF with the correct AppleScript PDF type
-				save front document in file pdfPath as Çclass PDF È
+				save front document in file pdfPath as Â«class PDF Â»
 				close front document saving no
 			end tell
 			
@@ -58,8 +58,7 @@ try
 	-- Success message
 	display dialog "PDF conversion complete!" buttons {"OK"} default button "OK"
 	
-	
-	-- Process PDFs in output_pdfs directory
+	-- New functionality: process PDFs in output_pdfs directory
 	tell application "Finder"
 		if not (exists folder pdfFolder) then
 			error "The output_pdfs directory does not exist."
@@ -122,6 +121,3 @@ try
 on error errMsg
 	display dialog "Error: " & errMsg buttons {"OK"} default button "OK" with icon stop
 end try
-
-
-
