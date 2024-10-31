@@ -8,7 +8,7 @@ An open sourced extractor for video files to raw text
 ---
 ## Core Software Components in `src`
 
-### Page Extractor
+### Page Scanner
 - Utilize motion detection to recognize a full page, scanning its contents
   -- Extract the still frame
 - Increment and count prefixes and page numbers

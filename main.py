@@ -1,6 +1,6 @@
 import os
 import threading
-from src.page_extractor import BookPageExtractor
+from src.page_extractor import BookPageScanner
 from src.text_extractor import TextExtractor
 from utils.spinner_task import spinner_task
 
@@ -12,8 +12,8 @@ def is_done():
 def main(video_path_input):
     global done
     
-    scanner = BookPageExtractor(video_path_input)
-    extractor = TextExtractor()
+    page_scanner = BookPageScanner(video_path_input)
+    text_extractor = TextExtractor()
     
     output_frames_dir = 'output_frames'
     if not os.path.exists(output_frames_dir):
@@ -36,20 +36,19 @@ def main(video_path_input):
         else:
             print('Continuing...')
         
-    # ----------- Perform actual video processing and frame simulation -----------
+# ----------- Perform actual video processing and frame simulation -----------
     done = False
     spinner_thread = threading.Thread(target=spinner_task, args=('lines', is_done))
     spinner_thread.start()
 
     try:
-        scanner.process_video(output_frames_dir)
+        page_scanner.process_video(output_frames_dir)
     except Exception as e:
         print(f'Error scanning video file: {e}')
     finally:
         done = True
         spinner_thread.join()
-        
-    # ----------- Perform actual text extraction from image frames -----------
+# ------------------------------------------------------------------------
 
     output_text_dir = 'output_text'
     if not os.path.exists(output_text_dir):
@@ -72,6 +71,11 @@ def main(video_path_input):
         else:
             print('No existing files found in output text, continuing...')
 
+# ----------- Perform actual text extraction from image frames -----------
+
+# Can now utilize with Apple Script with shell commands
+# - provide versioning info for applescript, mac os version
+# - 
     done = False
     spinner_thread_dots = threading.Thread(target=spinner_task, args=('dots', is_done))
     spinner_thread_dots.start()
@@ -79,13 +83,14 @@ def main(video_path_input):
     try:
         scanned_frames = os.listdir(output_frames_dir)
         for frame in scanned_frames:
-            extractor.extract_text(f'{output_frames_dir}/{frame}')
+            # utilize specific OCR extractor from /src directory below here
+            text_extractor.extract_text(f'{output_frames_dir}/{frame}')
     except Exception as e:
         print(f'Error extracting text from frames: {e}')
     finally:
         done = True
         spinner_thread_dots.join()
-
+# ------------------------------------------------------------------------
 
 
 # MAIN

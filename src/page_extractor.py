@@ -3,7 +3,7 @@ import numpy as np
 import os
 from skimage.metrics import structural_similarity as ssim
 
-class BookPageExtractor:
+class BookPageScanner:
     def __init__(self, video_path):
         try:
             self.video_path = video_path
