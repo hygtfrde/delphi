@@ -3,7 +3,13 @@
 
 ![Contributions Welcome](_imgs/contributors_welcome.svg)
 
-An open sourced extractor for video files to raw text
+## An extractor for video files to raw text
+
+### Classic Mode
+Upload a video file of a book's pages being turned into the main python program, automatically recognize the unique pages, produce the still frame images of the pages, and extract the text, using an OCR module of your choosing, into TXT output files. 
+
+### Active Scanner Mode
+Begin the main program in Active Scanner mode, open your camera app or webcam, place over the book's pages and automatically scan the page when the quality is above the required threshold, continue turning pages and automatically scanning. Finally utilize an OCR module of your choice to extract the raw text from the pages into an output TXT file or files.
 
 ---
 ## Core Software Components in `src`
