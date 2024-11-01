@@ -43,16 +43,22 @@ An open sourced extractor for video files to raw text
 ### Installation
 #### Option 1: pip install
 - Use `pip` to install dependencies from `requirements.txt`:
-  ```bash
-  pip install -r requirements.txt
-  ```
+```bash
+pip install -r requirements.txt
+```
 #### Option 2: pipenv sync
 - Use `pipenv` to install exact package versions from `Pipfile.lock`:
-`pipenv sync` 
+```bash
+pipenv sync
+``` 
 - To update packages to their latest compatible versions as specified in `Pipfile.lock`, while keeping `Pipfile` dependencies the same:
-`pipenv update`
+```bash
+pipenv update
+```
 - Remove unused dependencies with:
-`pipenv clean`
+```bash
+pipenv clean
+```
 
 ---
 ## Running
