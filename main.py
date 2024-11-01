@@ -1,6 +1,6 @@
 import os
 import threading
-from src.page_extractor import BookPageScanner
+from src.page_scanner import BookPageScanner
 from src.text_extractor import TextExtractor
 from utils.spinner_task import spinner_task
 
