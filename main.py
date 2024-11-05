@@ -74,10 +74,6 @@ def main(video_path_input):
             print('No existing files found in output text, continuing...')
 
 # ----------- Perform actual text extraction from image frames -----------
-
-# Can now utilize with Apple Script with shell commands
-# - provide versioning info for applescript, mac os version
-# - 
     done = False
     spinner_thread_dots = threading.Thread(target=spinner_task, args=('dots', is_done))
     spinner_thread_dots.start()

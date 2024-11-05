@@ -23,3 +23,5 @@ testing/ocr_modules/__pycache__
 /testing/test_output_text/*
 !/testing/test_output_text/test_output_text_readme.md
 
+testing/OCR_output
+
