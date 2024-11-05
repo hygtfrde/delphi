@@ -3,6 +3,7 @@ import threading
 from src.page_scanner import BookPageScanner
 from src.text_extractor import TextExtractor
 from utils.spinner_task import spinner_task
+from utils.get_user_input import get_user_input
 
 done = False
 
@@ -11,18 +12,18 @@ def is_done():
 
 def main(video_path_input):
     global done
-    
     page_scanner = BookPageScanner(video_path_input)
     text_extractor = TextExtractor()
-    
     output_frames_dir = 'output_frames'
+
+    # ----------- Output Frames
     if not os.path.exists(output_frames_dir):
         os.makedirs(output_frames_dir)
     else:
         existing_files = os.listdir(output_frames_dir)
         if existing_files:
-            response = input("There are already existing files in the output frames directory. Do you want to delete them and continue? (Y/N): ").strip().lower()
-            if response == 'y':
+            user_response = get_user_input("There are already existing files in the output frames directory. Do you want to delete them and continue? (Y/N): ", 60)
+            if user_response == 'y':
                 for file in existing_files:
                     file_path = os.path.join(output_frames_dir, file)
                     try:
@@ -50,6 +51,7 @@ def main(video_path_input):
         spinner_thread.join()
 # ------------------------------------------------------------------------
 
+    # ----------- Output Text
     output_text_dir = 'output_text'
     if not os.path.exists(output_text_dir):
         os.makedirs(output_text_dir)

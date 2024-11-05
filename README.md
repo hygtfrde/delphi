@@ -65,6 +65,10 @@ pipenv update
 ```bash
 pipenv clean
 ```
+#### Mac OS Supported Versions
+If using Apple Vision OCR, the versions below are supported. Newer versions may introduce complexities, and older versions may not work properly.
+- MAC OS VERSION = 14.6.1
+- APPLE SCRIPT VERSION = 1.3.6
 
 ---
 ## Running
