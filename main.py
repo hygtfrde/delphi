@@ -1,7 +1,7 @@
 import os
 import threading
 from src.page_scanner import BookPageScanner
-from src.text_extractor import TextExtractor
+import src.text_extractor as text_extractor
 from utils.spinner_task import spinner_task
 from utils.get_user_input import get_user_input
 
@@ -13,7 +13,6 @@ def is_done():
 def main(video_path_input):
     global done
     page_scanner = BookPageScanner(video_path_input)
-    text_extractor = TextExtractor()
     output_frames_dir = 'output_frames'
 
     # ----------- Output Frames
@@ -79,10 +78,7 @@ def main(video_path_input):
     spinner_thread_dots.start()
     
     try:
-        scanned_frames = os.listdir(output_frames_dir)
-        for frame in scanned_frames:
-            # utilize specific OCR extractor from /src directory below here
-            text_extractor.extract_text(f'{output_frames_dir}/{frame}')
+        text_extractor.text_extractor()
     except Exception as e:
         print(f'Error extracting text from frames: {e}')
     finally:
