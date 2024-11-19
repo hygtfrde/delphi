@@ -1,7 +1,7 @@
 import os
 import threading
 from src.page_scanner import BookPageScanner
-import mac_vision_extractor as mac_vision_extractor
+import src.mac_vision_extractor as mac_vision_extractor
 from utils.spinner_task import spinner_task
 from utils.get_user_input import get_user_input
 
@@ -48,7 +48,7 @@ def main(video_path_input):
     spinner_thread.start()
 
     try:
-        page_scanner.process_video(output_frames_dir)
+        page_scanner.process_video()
     except Exception as e:
         print(f'Error scanning video file: {e}')
     finally:
