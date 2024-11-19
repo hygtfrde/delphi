@@ -1,7 +1,7 @@
 import os
 import threading
 from src.page_scanner import BookPageScanner
-import src.text_extractor as text_extractor
+import mac_vision_extractor as mac_vision_extractor
 from utils.spinner_task import spinner_task
 from utils.get_user_input import get_user_input
 
@@ -32,7 +32,13 @@ def main(video_path_input):
                         print(f"Failed to delete {file_path}. Error: {e}")
             else:
                 print("Operation aborted.")
-                return
+                # Prompt for whether to continue with text extraction or exit
+                proceed_with_text_extraction = get_user_input("Would you like to proceed with text extraction on the existing frames? (Y/N): ", 60)
+                if proceed_with_text_extraction.lower() == 'y':
+                    print("Proceeding with text extraction...")
+                else:
+                    print("Exiting program.")
+                    return
         else:
             print('Continuing...')
         
@@ -78,7 +84,8 @@ def main(video_path_input):
     spinner_thread_dots.start()
     
     try:
-        text_extractor.text_extractor()
+        # Update folder to 'input_videos' instead of prompting for user selection
+        mac_vision_extractor.text_extractor()
     except Exception as e:
         print(f'Error extracting text from frames: {e}')
     finally:
