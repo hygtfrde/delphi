@@ -125,12 +125,12 @@ def easyOCR_main(frame_path):
     parent_dir = os.path.dirname(script_dir)
     image_file = os.path.join(parent_dir, f'test_frames/{frame_path}')
 
-    output_dir = os.path.join(parent_dir, 'easyOCR_output')
+    output_dir = os.path.join(parent_dir, 'OCR_output')
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-        print(f"Directory 'easyOCR_output' created at: {output_dir}")
+        print(f"Directory 'OCR_output' created at: {output_dir}")
     else:
-        print(f"Directory 'easyOCR_output' already exists at: {output_dir}")
+        print(f"Directory 'OCR_output' already exists at: {output_dir}")
 
     if os.path.exists(image_file):
         # Extract the base name of the image file without extension
