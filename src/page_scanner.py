@@ -1,6 +1,7 @@
 import cv2
-import numpy as np
+from tqdm import tqdm
 import os
+
 from skimage.metrics import structural_similarity as ssim
 
 class BookPageScanner:
@@ -27,30 +28,42 @@ class BookPageScanner:
         self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.last_captured_frame = None
 
-    def is_duplicate(self, frame, previous_frame):
-        if previous_frame is None:
-            return False
+    def extract_page(self, frame, output_path):
+        try:
+            file_name = os.path.join(output_path, f'page_frame_{self.frame_number:05d}.jpg')
+            cv2.imwrite(file_name, frame)
+        except Exception as e:
+            print(f"Failed to save frame {self.frame_number}: {e}")
 
-        # Resize to ensure compatible dimensions
-        frame_resized = cv2.resize(frame, (previous_frame.shape[1], previous_frame.shape[0]))
-        similarity = cv2.matchTemplate(frame_resized, previous_frame, cv2.TM_CCOEFF_NORMED).max()
-        return similarity > self.config['similarity_threshold']
 
-    def process_video(self):
-        frame_skip = max(1, int(self.fps / 2))
-        frame_number = 0
-        from tqdm import tqdm
-        total_frames = self.frame_count
+    def process_video(self, output_path):
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
 
-        with tqdm(total=total_frames) as pbar:
+        self.frame_skip = max(1, int(self.fps / 2))  # Skip to process approximately 2 frames per second
+        self.frame_number = 0
+        self.total_frames = self.frame_count
+        
+        print('Video Upload FRAME COUNT = ', self.frame_count)
+
+        with tqdm(total=self.total_frames) as pbar:
             while self.cap.isOpened():
-                self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+                # Set the frame position to the current frame number
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frame_number)
                 ret, frame = self.cap.read()
                 if not ret:
                     break
-                # Process the frame (placeholder for your logic)
-                frame_number += frame_skip
-                remaining_frames = total_frames - frame_number
-                pbar.update(min(frame_skip, remaining_frames))
+
+                # Extract and save the current frame
+                self.extract_page(frame, output_path)
+
+                # Increment frame number by the skip value
+                self.frame_number += self.frame_skip
+
+                # Update progress bar
+                remaining_frames = self.total_frames - self.frame_number
+                pbar.update(min(self.frame_skip, remaining_frames))
 
         self.cap.release()
+        print(f"Frames saved to directory: {output_path}")
+

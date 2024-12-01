@@ -127,3 +127,12 @@ class PageFlattener:
             cv2.destroyAllWindows()
 
         return flattened_image
+
+    def is_duplicate(self, frame, previous_frame):
+        if previous_frame is None:
+            return False
+
+        # Resize to ensure compatible dimensions
+        frame_resized = cv2.resize(frame, (previous_frame.shape[1], previous_frame.shape[0]))
+        similarity = cv2.matchTemplate(frame_resized, previous_frame, cv2.TM_CCOEFF_NORMED).max()
+        return similarity > self.config['similarity_threshold']

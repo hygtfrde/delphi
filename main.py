@@ -21,7 +21,8 @@ def main(video_path_input):
     else:
         existing_files = os.listdir(output_frames_dir)
         if existing_files:
-            user_response = get_user_input("There are already existing files in the output frames directory. Do you want to delete them and continue? (Y/N): ", 60)
+            output_frames_message = "There are already existing files in the output frames directory. Do you want to delete them and continue? (Y/N): "
+            user_response = get_user_input(output_frames_message, 20)
             if user_response == 'y':
                 for file in existing_files:
                     file_path = os.path.join(output_frames_dir, file)
@@ -33,7 +34,8 @@ def main(video_path_input):
             else:
                 print("Operation aborted.")
                 # Prompt for whether to continue with text extraction or exit
-                proceed_with_text_extraction = get_user_input("Would you like to proceed with text extraction on the existing frames? (Y/N): ", 60)
+                output_text_message = "Would you like to proceed with text extraction on the existing frames? (Y/N): "
+                proceed_with_text_extraction = get_user_input(output_text_message, 20)
                 if proceed_with_text_extraction.lower() == 'y':
                     print("Proceeding with text extraction...")
                 else:
@@ -48,7 +50,7 @@ def main(video_path_input):
     spinner_thread.start()
 
     try:
-        page_scanner.process_video()
+        page_scanner.process_video(output_frames_dir)
     except Exception as e:
         print(f'Error scanning video file: {e}')
     finally:
