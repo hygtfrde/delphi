@@ -1,5 +1,8 @@
 import os
+import sys
 import threading
+# Add the src dir to path
+sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 from src.page_scanner import BookPageScanner
 import mac_vision_extractor as mac_vision_extractor
 from utils.spinner_task import spinner_task
@@ -40,7 +43,7 @@ def main(video_path_input):
                     print("Exiting program.")
                     return
         else:
-            print('Continuing...')
+            print('No existing files...')
         
 # ----------- Perform actual video processing and frame simulation -----------
     done = False

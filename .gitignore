@@ -2,6 +2,9 @@
 output_frames/*
 output_text/*
 
+# Ignore binaries
+bin/*
+
 # Ignore macOS .DS_Store files, python bytecode
 .DS_Store
 __pycache__
@@ -24,4 +27,9 @@ testing/ocr_modules/__pycache__
 !/testing/test_output_text/test_output_text_readme.md
 
 testing/OCR_output
+
+share/*
+
+pyvenv.cfg
+
 
