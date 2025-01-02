@@ -1,19 +1,24 @@
 import os
 import threading
+import time
 
-def get_user_input(prompt, timeout):
+def get_user_input(prompt, timeout=60):
+
     print(prompt)
-    response = [None]  # Use a mutable object to allow updates from the thread
-
-    def timeout_input():
-        response[0] = 'y'  # Default response if timeout occurs
-
-    timer = threading.Timer(timeout, timeout_input)
-    timer.start()
-
-    try:
-        response[0] = input().strip().lower()  # Get user input
-    finally:
-        timer.cancel()  # Cancel the timer regardless of input
-
-    return response[0]
+    start_time = time.time()
+    while True:
+        try:
+            user_input = input().strip().lower()
+            return user_input
+        except KeyboardInterrupt:
+            print("\nOperation interrupted by user.")
+            return None
+        elapsed_time = time.time() - start_time
+        if elapsed_time > timeout:
+            print(f"\nTimeout: No input received within {timeout} seconds.")
+            return None
+        elif elapsed_time > timeout - 10:
+            if elapsed_time % 1 == 0:
+                print(f"Exiting in {int(timeout - elapsed_time)} seconds...")
+        elif elapsed_time > 0 and elapsed_time % 15 == 0:
+            print("Are you there?")

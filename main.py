@@ -35,7 +35,6 @@ def main(video_path_input):
                         print(f"Failed to delete {file_path}. Error: {e}")
             else:
                 print("Operation aborted.")
-                # Prompt for whether to continue with text extraction or exit
                 proceed_with_text_extraction = get_user_input("Would you like to proceed with text extraction on the existing frames? (Y/N): ", 60)
                 if proceed_with_text_extraction.lower() == 'y':
                     print("Proceeding with text extraction...")
@@ -87,7 +86,6 @@ def main(video_path_input):
     spinner_thread_dots.start()
     
     try:
-        # Update folder to 'input_videos' instead of prompting for user selection
         mac_vision_extractor.text_extractor()
     except Exception as e:
         print(f'Error extracting text from frames: {e}')
@@ -99,4 +97,31 @@ def main(video_path_input):
 
 # MAIN
 if __name__ == "__main__":
-    main('input_videos/shorter.mp4')
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    input_videos_dir = os.path.join(script_dir, "input_videos")
+
+    if not os.path.exists(input_videos_dir):
+        os.makedirs(input_videos_dir)
+        print(f"Directory 'input_videos' created at: {input_videos_dir}")
+        print(f"Please add video files to the directory and run the program again.")
+        sys.exit(1)
+    else:
+        print(f"Directory 'input_videos' already exists at: {input_videos_dir}")
+        print(f"Continuing with video processing...")
+
+        input_videos_dir = "input_videos"
+        video_extensions = {".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv"}
+
+        video_files = [
+            f for f in os.listdir(input_videos_dir)
+            if os.path.isfile(os.path.join(input_videos_dir, f)) and os.path.splitext(f)[1].lower() in video_extensions
+        ]
+
+        if not video_files:
+            print(f"No video files found in '{input_videos_dir}'. Exiting program.")
+            sys.exit(1)
+
+        for video_file in video_files:
+            video_path = os.path.join(input_videos_dir, video_file)
+            print(f"Processing video: {video_path}")
+            main(video_path)
