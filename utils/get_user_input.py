@@ -1,19 +1,28 @@
-import os
-import threading
+import sys
+import select
+import time
 
-def get_user_input(prompt, timeout):
-    print(prompt)
-    response = [None]  # Use a mutable object to allow updates from the thread
+def get_user_input(prompt, timeout=60):
+    print(prompt, flush=True)
+    start_time = time.time()
 
-    def timeout_input():
-        response[0] = 'y'  # Default response if timeout occurs
+    while True:
+        elapsed_time = time.time() - start_time
+        remaining_time = timeout - elapsed_time
 
-    timer = threading.Timer(timeout, timeout_input)
-    timer.start()
+        if remaining_time <= 0:
+            print(f"\nTimeout: No input received within {timeout} seconds.")
+            return None
 
-    try:
-        response[0] = input().strip().lower()  # Get user input
-    finally:
-        timer.cancel()  # Cancel the timer regardless of input
+        if remaining_time <= 10 and int(remaining_time) % 2 == 0:
+            print(f"Exiting in {int(remaining_time)} seconds...", flush=True)
 
-    return response[0]
+        if int(elapsed_time) % 15 == 0 and int(elapsed_time) != 0:
+            print("Are you there?", flush=True)
+
+        ready, _, _ = select.select([sys.stdin], [], [], 1)
+        if ready:
+            user_input = sys.stdin.readline().strip().lower()
+            return user_input
+
+        time.sleep(0.5)
